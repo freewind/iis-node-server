@@ -15,18 +15,18 @@ app.get('/', (req, res) => {
 });
 
 app.post('/upload', (req, res) => {
-  const fileUpload = req.body as FileUpload
-  console.log('/upload', fileUpload);
+  const {fileName, forceOverride = false, fileContent = '', targetPath} = req.body as FileUpload
+  console.log('/upload', {fileName, fileContentLength: fileContent.length, targetPath});
 
-  const targetPath = path.resolve(fileUpload.targetPath);
   const targetPathExists = fs.existsSync(targetPath);
   console.log('targetPath exists?', targetPath, targetPathExists);
 
-  const {forceOverride, fileContent} = fileUpload;
   if (!targetPathExists || forceOverride) {
-    fs.writeFileSync(path.resolve(targetPath), fileContent, 'utf-8');
+    console.log('will write to file: ', targetPath)
+    fs.writeFileSync(targetPath, fileContent, 'utf-8');
     res.send('ok');
   } else {
+    console.log('will not override the target file:', targetPath)
     res.status(400).end(`File with target path is exist, and forceOverride is set to false: ${targetPath}`);
   }
 });
