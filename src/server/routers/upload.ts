@@ -1,6 +1,12 @@
 import express from 'express';
-import {FileUpload} from '../typing';
 import fs from "fs";
+
+type FileUpload = {
+  fileName: string;
+  fileContent: string;
+  targetPath: string;
+  forceOverride: boolean;
+};
 
 const uploadRouter = express.Router();
 

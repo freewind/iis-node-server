@@ -1,14 +1,24 @@
 {
   "scripts": {
-    "start": "ts-node ./src/index.ts"
+    "start": "ts-node ./src/server/index.ts",
+    "download-big-file": "ts-node ./src/client/downloadBigFile/index.ts"
   },
   "dependencies": {
+    "axios": "0.19.0",
     "body-parser": "1.19.0",
-    "express": "4.17.1"
+    "express": "4.17.1",
+    "md5-file": "4.0.0",
+    "minimist": "1.2.0",
+    "rimraf": "3.0.0",
+    "shelljs": "0.8.3"
   },
   "devDependencies": {
     "@types/body-parser": "1.17.1",
     "@types/express": "4.17.2",
+    "@types/md5-file": "4.0.1",
+    "@types/minimist": "1.2.0",
+    "@types/rimraf": "2.0.3",
+    "@types/shelljs": "0.8.6",
     "@types/webpack": "4.39.1",
     "@types/webpack-node-externals": "1.7.0",
     "ts-loader": "6.0.4",
