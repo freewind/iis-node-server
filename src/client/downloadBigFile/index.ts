@@ -18,6 +18,10 @@ if (!localCacheDir) {
   throw new Error('localTargetDirPath not provided')
 }
 
+function fixPath(path:string) :string{
+  return path.replace(/\\/g, '\\\\')
+}
+
 async function main() {
   const apiBase = `${host}/bigfile`;
   console.log('urlBase', apiBase);
@@ -40,7 +44,7 @@ async function main() {
 
   if (unDownloadedFiles.length > 0) {
     for (const unDownloadedFile of unDownloadedFiles) {
-      const command = `wget ${host}/readfile?filePath=${unDownloadedFile} -O ${localCacheDir}/${path.basename(unDownloadedFile)}`;
+      const command = `wget ${host}/readfile?filePath=${fixPath(unDownloadedFile)} -O ${localCacheDir}/${path.basename(unDownloadedFile)}`;
       console.log('command', command);
       shelljs.exec(command);
     }

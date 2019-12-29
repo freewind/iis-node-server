@@ -26,7 +26,7 @@ export default function findUnDownloadedFiles(localCacheDir: string, fileInfo: F
   console.log('invalidFiles', invalidFileNames);
   for (const invalidFile of invalidFileNames) {
     console.log('delete invalid file: ', invalidFile);
-    fs.unlinkSync(invalidFile)
+    fs.unlinkSync(path.resolve(localCacheDir, invalidFile))
   }
 
   const unDownloadedFiles = (fileInfo.smallFiles || []).filter(filePath => {
