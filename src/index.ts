@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import {FileUpload} from './typing';
-import fs from 'fs';
+import uploadRouter from './routers/upload';
 
 const app = express();
 
@@ -13,22 +12,7 @@ app.get('/', (req, res) => {
   res.send('Hello');
 });
 
-app.post('/upload', (req, res) => {
-  const {fileName, forceOverride = false, fileContent = '', targetPath} = req.body as FileUpload
-  console.log('/upload', {fileName, fileContentLength: fileContent.length, targetPath});
-
-  const targetPathExists = fs.existsSync(targetPath);
-  console.log('targetPath exists?', targetPath, targetPathExists);
-
-  if (!targetPathExists || forceOverride) {
-    console.log('will write to file: ', targetPath)
-    fs.writeFileSync(targetPath, fileContent, 'utf-8');
-    res.send('ok');
-  } else {
-    console.log('will not override the target file:', targetPath)
-    res.status(400).end(`File with target path is exist, and forceOverride is set to false: ${targetPath}`);
-  }
-});
+app.use('/upload', uploadRouter);
 
 app.listen(33000, () => {
   console.log('listen on http://localhost:33000');
