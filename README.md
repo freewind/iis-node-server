@@ -24,3 +24,9 @@ Should run `cmd` or other console as Administrator, then start this server by:
 npm install
 npm start
 ```
+
+### client
+
+```
+yarn run download-big-file --baseApi="http://someHost/someEndPoint" --filePath="C:\\users\\someUser\\someFile" --localCacheDir="/tmp/aaa"
+```
