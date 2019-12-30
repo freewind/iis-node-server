@@ -10,7 +10,8 @@
     "md5-file": "4.0.0",
     "minimist": "1.2.0",
     "rimraf": "3.0.0",
-    "shelljs": "0.8.3"
+    "shelljs": "0.8.3",
+    "tiny-async-pool": "1.1.0"
   },
   "devDependencies": {
     "@types/body-parser": "1.17.1",
@@ -19,6 +20,7 @@
     "@types/minimist": "1.2.0",
     "@types/rimraf": "2.0.3",
     "@types/shelljs": "0.8.6",
+    "@types/tiny-async-pool": "1.0.0",
     "@types/webpack": "4.39.1",
     "@types/webpack-node-externals": "1.7.0",
     "ts-loader": "6.0.4",

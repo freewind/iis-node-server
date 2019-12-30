@@ -2,10 +2,9 @@ import axios from 'axios';
 import cliArgs from './cliArgs';
 import {FileInfo} from '../../server/routers/bigFile/getFileInfo';
 import findUnDownloadedFiles from './findUndownloadedFiles';
-import shelljs from 'shelljs';
-import path from 'path';
 import checkCombinedFile from './checkCombinedFile';
 import combineLocalCacheFiles from './combineLocalCacheFiles';
+import downloadFilesInPool from './downloadFilesInPool';
 
 const {filePath, host, localCacheDir} = cliArgs;
 if (!filePath) {
@@ -16,10 +15,6 @@ if (!host) {
 }
 if (!localCacheDir) {
   throw new Error('localTargetDirPath not provided')
-}
-
-function fixPath(path:string) :string{
-  return path.replace(/\\/g, '\\\\')
 }
 
 async function main() {
@@ -43,11 +38,7 @@ async function main() {
   console.log('unDownloadedFiles', unDownloadedFiles);
 
   if (unDownloadedFiles.length > 0) {
-    for (const unDownloadedFile of unDownloadedFiles) {
-      const command = `wget ${host}/readfile?filePath=${fixPath(unDownloadedFile)} -O ${localCacheDir}/${path.basename(unDownloadedFile)}`;
-      console.log('command', command);
-      shelljs.exec(command);
-    }
+    await downloadFilesInPool(unDownloadedFiles, host, localCacheDir);
   } else {
     combineLocalCacheFiles(localCacheDir);
   }
