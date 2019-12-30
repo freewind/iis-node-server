@@ -7,9 +7,9 @@ function fixPath(path: string): string {
 }
 
 // Download 5 files in parallel to reach max speed, until all files downloaded
-export default async function downloadFilesInPool(unDownloadedFiles: string[], host: string, localCacheDir: string): Promise<void> {
+export default async function downloadFilesInPool(unDownloadedFiles: string[], baseApi: string, localCacheDir: string): Promise<void> {
   const commands = unDownloadedFiles.map(unDownloadedFile => {
-    return `wget ${host}/readfile?filePath=${fixPath(unDownloadedFile)} -O ${localCacheDir}/${path.basename(unDownloadedFile)}`;
+    return `wget ${baseApi}/readfile?filePath=${fixPath(unDownloadedFile)} -O ${localCacheDir}/${path.basename(unDownloadedFile)}`;
   });
 
   // the 'asyncPool' will reject immediately if any task is reject, which will cause all un-executed tasks ignored,

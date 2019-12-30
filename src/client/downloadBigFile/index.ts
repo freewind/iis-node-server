@@ -6,19 +6,19 @@ import checkCombinedFile from './checkCombinedFile';
 import combineLocalCacheFiles from './combineLocalCacheFiles';
 import downloadFilesInPool from './downloadFilesInPool';
 
-const {filePath, host, localCacheDir} = cliArgs;
+const {filePath, baseApi, localCacheDir} = cliArgs;
 if (!filePath) {
   throw new Error('filePath not provided')
 }
-if (!host) {
-  throw new Error('host not provided')
+if (!baseApi) {
+  throw new Error('baseApi not provided')
 }
 if (!localCacheDir) {
   throw new Error('localTargetDirPath not provided')
 }
 
 async function main() {
-  const apiBase = `${host}/bigfile`;
+  const apiBase = `${baseApi}/bigfile`;
   console.log('urlBase', apiBase);
 
   const response = await axios.post(`${apiBase}/prepare`, {
@@ -38,7 +38,7 @@ async function main() {
   console.log('unDownloadedFiles', unDownloadedFiles);
 
   if (unDownloadedFiles.length > 0) {
-    await downloadFilesInPool(unDownloadedFiles, host, localCacheDir);
+    await downloadFilesInPool(unDownloadedFiles, baseApi, localCacheDir);
   } else {
     combineLocalCacheFiles(localCacheDir);
   }
