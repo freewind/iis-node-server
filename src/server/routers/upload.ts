@@ -24,6 +24,7 @@ uploadRouter.post('/', (req, res) => {
   if (!targetPathExists || forceOverride) {
     console.log('will write to file: ', targetPath)
     fs.writeFileSync(targetPath, fileContent, 'utf-8');
+    console.log('writing done');
     res.send('ok');
   } else {
     console.log('will not override the target file:', targetPath)
