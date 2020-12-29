@@ -16,10 +16,15 @@ bigFileRouter.get('/', (req, res) => {
 
 bigFileRouter.post<Params>('/prepare', (req, res) => {
   const {filePath} = req.body;
+  console.log('filePath', filePath);
+
   const info = getFileInfo(filePath);
+  console.log('fileInfo', info);
+
   if (!info.requestFileExists || info.smallFilesDirExists) {
     return res.json(info);
   }
+
   generateSmallFiles(filePath, () => {
     res.json(getFileInfo(filePath));
   });

@@ -14,14 +14,18 @@ function writeEntireMd5File(dirPath: string, entireFileMd5: string): void {
 }
 
 export default function generateSmallFiles(filePath: string, callback: () => void) {
+  console.log('> generateSmallFiles', filePath);
+
   const dirPath = buildDirPath(filePath);
+  console.log('dirPath', dirPath);
+
   let smallFileNumber = 0;
   let smallFileStream: SmallFileStream | null = null;
 
   const readStream = fs.createReadStream(filePath);
   const entireFileMd5Stream = crypto.createHash('md5').setEncoding('hex');
 
-  readStream.on('data', (data) => {
+  readStream.on('data', (data: Buffer) => {
     if (smallFileStream !== null && smallFileStream.bytesWritten > smallFileSize) {
       smallFileStream.end();
       smallFileStream = null;
@@ -30,6 +34,7 @@ export default function generateSmallFiles(filePath: string, callback: () => voi
     if (smallFileStream === null) {
       smallFileStream = new SmallFileStream(dirPath, smallFileNumber)
       smallFileNumber += 1;
+      console.log('smallFileNumber', smallFileNumber);
     }
 
     smallFileStream.write(data);
@@ -37,6 +42,8 @@ export default function generateSmallFiles(filePath: string, callback: () => voi
   });
 
   readStream.on('end', () => {
+    console.log("read end", {smallFileNumber});
+
     if (smallFileStream !== null) {
       smallFileStream.end();
     }
