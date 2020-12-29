@@ -29,7 +29,9 @@ export default class SmallFileStream {
   end() {
     this.fileStream.end();
     this.md5Stream.end();
-    this.addMd5Suffix();
+    setTimeout(() => {
+      this.addMd5Suffix();
+    }, 2000)
   }
 
   private addMd5Suffix() {
