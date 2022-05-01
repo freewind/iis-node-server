@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "ts-node ./src/server/index.ts",
+    "buildServer": "webpack --entry ./src/server/index.ts",
     "download-big-file": "ts-node ./src/client/downloadBigFile/index.ts"
   },
   "dependencies": {
