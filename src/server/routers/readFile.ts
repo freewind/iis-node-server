@@ -8,7 +8,7 @@ type Params = {
 }
 
 readFileRouter.get<Params>('/', (req, res) => {
-  const filePath = req.query.filePath;
+  const filePath = req.query.filePath?.toString();
   if (!filePath) {
     return res.status(400).end('No query string "filePath" found');
   }

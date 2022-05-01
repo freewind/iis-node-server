@@ -18,10 +18,11 @@ export default async function downloadFilesInPool(unDownloadedFiles: string[], b
     return new Promise((resolve, reject) => {
       shelljs.exec(command, (code, stdout, stderr) => {
         if (stderr) {
+          // just print, won't reject
           console.log(stderr);
         }
         // always resolve
-        resolve();
+        resolve(undefined);
       });
     })
   })
